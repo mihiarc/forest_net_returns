@@ -7,28 +7,20 @@ library(stargazer)
 library(ggplot2)
 library(tidyverse)
 
-#load data
-# sol <- read.csv('Z:/forest_project/faustmann/faustmann_result.csv')
-# sol <- sol[c('fips','spgrpcd','fortypcd','optage')]
-# sol$fips <- formatC(sol$fips, format='d', width = 5, flag='0')
+#tree growth functions
 bert <- tbl_df(readRDS('growth_parameters.rds')) %>%
   mutate(fips = substring(id, 1, 5),
          spgrpcd = substring(id, 6, 7),
          fortypcd = substring(id, 8, 10))
 
-
+#observed removal age
 obs.age <- tbl_df(readRDS("D:/GroupWork/FIA Data/Harvest Age/obs_harvest_age.rds")) %>%
   select(fips, spgrpcd, fortypcd, age.mean)
-
-
 
 #reference tables
 nbr <- readRDS("county_neighbor_mapping.rds")
 georef <- readRDS("fia_regions_mapping.rds")
 species <- readRDS("fia_spgrpcd_majspgrpcd_mapping.rds")
-
-
-
 
 ###############################################################################
 # clean price data
